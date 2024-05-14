@@ -1,4 +1,4 @@
-const cacheName = "DefaultCompany-Fortune Tuger-0.0.2";
+const cacheName = "DefaultCompany-Fortune Tuger-0.0.3";
 const contentToCache = [
     "Build/WebGL.loader.js",
     "Build/WebGL.framework.js.br",
