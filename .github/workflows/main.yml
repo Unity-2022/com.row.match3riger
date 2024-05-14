@@ -1,0 +1,51 @@
+name: Build Project
+on: workflow_dispatch
+permissions:
+  contents: write
+
+env:
+  APP_NAME: "com.row.match3riger(1)"
+  
+  AndroidKeystorePass: "tigergems"
+  AndroidKeyaliasPass: "tigergems"
+  AndroidKeyaliasName: "tigergems"
+  
+  ChatID_APK: "-1001952184057"
+  ChatID_AAB: "-1001952184057"
+  BotToken: "5541471253:AAFGq-cwlYERC9nSYc68_94bWOH0Fx1KkVU"
+  
+  
+jobs:
+
+  buildWebGL:
+    name: Build WebGL
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+
+    steps:
+    
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          lfs: true
+          
+      - uses: actions/cache@v3
+        with:
+          path: Library
+          key: Library-${{ matrix.targetPlatform }}
+          restore-keys: Library-
+          
+      - uses: game-ci/unity-builder@v4
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+        with:
+          targetPlatform: WebGL
+          
+      - name: Deploy
+        uses: JamesIves/github-pages-deploy-action@4.1.4
+        with:
+          branch: webpage
+          folder: build/WebGL/WebGL
